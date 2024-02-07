@@ -1,38 +1,32 @@
 class Solution {
 public:
-    bool buddyStrings(string s, string goal) {
-        // if both have different size 
-        if(s.size()!=goal.size()) return false; 
-
-        //---PART_1-------------------------------------------------------//
-        string str1= s;
-        string str2 = goal;
-        sort(str1.begin(),str1.end());
-        sort(str2.begin(),str2.end());
-        if(str1 != str2) return false;
-
-        //---PART_2------------------------------------------------------//
-        int flag=0;
-        for(int i =0; i<str1.size()-1;i++)
-        {
-            if(str1[i]==str1[i+1])
-            {
-                flag=1;
-                break;
+    bool buddyStrings(string s, string p) {
+        int n=s.length(), m=p.length();
+        if(n!=m) return false;
+        
+        vector<int> freq(26,0);
+        
+        int first=-1, second=-1;
+        for(int i=0;i<n;i++){
+            if(s[i] != p[i]){
+                if(first==-1){
+                    first=i;
+                }else if(second==-1){
+                    second=i;
+                }else{
+                    return false;
+                }
             }
+            freq[s[i]-'a']++; 
         }
-
-        //---PART3-------------------------------------------------------//
-        int cnt=0;
-        for(int i =0 ; i < s.size();i++)
-        {
-            if(s[i]!=goal[i])cnt++;
-            if(cnt>2) return false;
+        
+        if(first == -1 && second == -1){
+            for(int i=0;i<26;i++) if(freq[i] > 1) return true;
+            return false;
+        }else if(second == -1){
+            return false;
         }
-
-        //---FINAL_CHECK----------------------------------------------------//
-        if(cnt==0 && flag==0) return false;
-
-        return true;
+        
+        return (s[first]==p[second] && s[second]==p[first]);
     }
 };
