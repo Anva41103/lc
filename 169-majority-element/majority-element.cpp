@@ -2,8 +2,12 @@ class Solution {
 public:
     int majorityElement(vector<int>& nums) 
     {
-        sort(nums.begin(),nums.end());
-        int temp= nums[nums.size()/2];
-        return temp;
+       int count = 0, mark = nums[0];
+        for(const int& i: nums) {
+            if(!count) { mark = i; count = 1; } 
+            else if(!(mark^i)) count++;
+            else count--;
+        }
+        return mark;
     }
 };
