@@ -5,7 +5,7 @@ public:
         return a[0]<b[0];
     }
     int findMinArrowShots(vector<vector<int>>& p) {
-        sort(p.begin(),p.end(), comp);
+        sort(p.begin(),p.end());
         int a=1;
         int e=p[0][1];
         for(int i=1;i<p.size();i++)
